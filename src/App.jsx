@@ -1,6 +1,7 @@
+import { Route, Routes } from "react-router-dom";
+import AddEmployees from "./components/AddEmployees";
 import ListEmployees from "./components/ListEmployees";
 import NavbarS from "./components/NavbarS";
-import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <NavbarS />
       <Routes>
         <Route path="/empleados" element={<ListEmployees />} />
+        <Route path="/agregar" element={<AddEmployees />} />
       </Routes>
     </>
   );
