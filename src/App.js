@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import AddEmployees from "./components/AddEmployees";
+import AddEmployee from "./components/AddEmployee";
 import ListEmployees from "./components/ListEmployees";
-import NavbarS from "./components/NavbarS";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <NavbarS />
+      <Navbar />
       <Routes>
         <Route path="/empleados" element={<ListEmployees />} />
-        <Route path="/agregar" element={<AddEmployees />} />
+        <Route path="/agregar" element={<AddEmployee />} />
       </Routes>
     </>
   );
