@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
+import { Link } from "react-router-dom";
 
 const TABLE_HEAD = ["Nombre", "Departamento", "Salario", "Acción"];
 
@@ -33,7 +34,7 @@ export default function ListEmployees() {
             </tr>
           </thead>
           <tbody>
-            {employees.map(({ name, departament, salary }, index) => (
+            {employees.map(({ id, name, departament, salary }, index) => (
               <tr key={name} className={index % 2 === 0 ? "table-light" : ""}>
                 <td>{name}</td>
                 <td>{departament}</td>
@@ -48,9 +49,12 @@ export default function ListEmployees() {
                   />
                 </td>
                 <td>
-                  <a href="/" className="text-primary text-decoration-none">
+                  <Link
+                    className="text-primary text-decoration-none"
+                    to={`/editar/${id}`}
+                  >
                     Editar
-                  </a>
+                  </Link>
                 </td>
               </tr>
             ))}

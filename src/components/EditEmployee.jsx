@@ -1,38 +1,49 @@
-
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-
-export default function AddEmployee() {
+export default function EditEmployee() {
+  const urlBase = "http://localhost:8080/empleadito-app/crearEmpleado";
+  const { id } = useParams();
   let navegation = useNavigate();
   const [employee, setEmployee] = useState({
     name: "",
     departament: "",
-    salary: ""
-  })
-  
-  const{name, departament, salary} = employee;
+    salary: "",
+  });
+
+  const { name, departament, salary } = employee;
+
+  useEffect(() => {
+    searchEmployee();
+  }, []);
+
+  const searchEmployee = async () => {
+    const result = await axios.get (`${urlBase}/${id}`)
+    setEmployee(result.data);
+  }
 
   const onInputChange = (e) => {
-    setEmployee({...employee, [e.target.name]: e.target.value})
-  }
+    setEmployee({ ...employee, [e.target.name]: e.target.value });
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const urlBase = "http://localhost:8080/empleadito-app/crearEmpleado";
     await axios.post(urlBase, employee);
-    navegation('/empleados');
-  }
-
+    navegation("/empleados");
+  };
   return (
     <div className="card h-100 w-100 overflow-auto p-5 justify-content-center d-flex align-items-center">
-      <h1 className="h3 text-secondary">Agregar Empleado</h1>
+      <h1 className="h3 text-secondary">Editar Empleado</h1>
       <p className="text-muted mt-2">
-        Introduce los datos del empleado para agregarlo
+        Introduce los nuevos datos del empleado para editarlo
       </p>
 
-      <form className="mb-3" onSubmit={(e) => onSubmit(e)} style={{ maxWidth: "400px" }}>
+      <form
+        className="mb-3"
+        onSubmit={(e) => onSubmit(e)}
+        style={{ maxWidth: "400px" }}
+      >
         <div className="mb-3">
           <label htmlFor="nombre" className="form-label fw-semibold">
             Nombre
@@ -42,7 +53,7 @@ export default function AddEmployee() {
             className="form-control"
             id="nombre"
             name="name"
-            placeholder="Juan Perez"
+            placeholder={name}
             required={true}
             value={name}
             onChange={(e) => onInputChange(e)}
@@ -57,7 +68,7 @@ export default function AddEmployee() {
             type="text"
             className="form-control"
             id="departamento"
-            name="departament"
+            name={departament}
             placeholder="Sistemas"
             required={true}
             value={departament}
@@ -75,7 +86,7 @@ export default function AddEmployee() {
             className="form-control"
             id="salario"
             name="salary"
-            placeholder="3000.00"
+            placeholder={salary}
             required={true}
             value={salary}
             onChange={(e) => onInputChange(e)}
@@ -83,7 +94,7 @@ export default function AddEmployee() {
         </div>
 
         <button type="submit" className="btn btn-primary w-100 mt-3">
-          Agregar
+          Editar
         </button>
       </form>
     </div>

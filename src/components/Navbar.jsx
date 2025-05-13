@@ -34,7 +34,7 @@ function NavList() {
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-light mt-4 rounded px-4 py-3">
+    <nav className="navbar navbar-expand-lg bg-light rounded px-4 py-3">
       <div className="container-fluid">
         <a className="navbar-brand fw-bold" href="/">
           Empleadito
