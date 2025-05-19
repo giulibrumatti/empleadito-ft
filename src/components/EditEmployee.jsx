@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditEmployee() {
-  const urlBase = "http://localhost:8080/empleadito-app/crearEmpleado";
+  const urlBase = "http://localhost:8080/empleadito-app/empleados";
   const { id } = useParams();
   let navegation = useNavigate();
   const [employee, setEmployee] = useState({
@@ -29,7 +29,7 @@ export default function EditEmployee() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(urlBase, employee);
+    await axios.put(urlBase, employee);
     navegation("/empleados");
   };
   return (
