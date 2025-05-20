@@ -15,13 +15,13 @@ export default function EditEmployee() {
   const { name, departament, salary } = employee;
 
   useEffect(() => {
+    const searchEmployee = async () => {
+      const result = await axios.get(`${urlBase}/${id}`);
+      setEmployee(result.data);
+    };
+
     searchEmployee();
   }, []);
-
-  const searchEmployee = async () => {
-    const result = await axios.get (`${urlBase}/${id}`)
-    setEmployee(result.data);
-  }
 
   const onInputChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
@@ -29,7 +29,7 @@ export default function EditEmployee() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(urlBase, employee);
+    await axios.put(`${urlBase}/${id}`, employee);
     navegation("/empleados");
   };
   return (
@@ -68,8 +68,8 @@ export default function EditEmployee() {
             type="text"
             className="form-control"
             id="departamento"
-            name={departament}
-            placeholder="Sistemas"
+            name="departament"
+            placeholder={departament}
             required={true}
             value={departament}
             onChange={(e) => onInputChange(e)}

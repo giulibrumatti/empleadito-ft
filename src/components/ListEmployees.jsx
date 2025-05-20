@@ -7,7 +7,7 @@ const TABLE_HEAD = ["Nombre", "Departamento", "Salario", "Acción"];
 
 export default function ListEmployees() {
   const urlBase = "http://localhost:8080/empleadito-app/empleados";
-  const [employees, setEmployees] = useState([]);
+  const [employee, setEmployee] = useState([]);
 
   useEffect(() => {
     addEmployees();
@@ -17,7 +17,12 @@ export default function ListEmployees() {
     const result = await axios.get(urlBase);
     console.log("Resultado de cargar nuestros datos");
     console.log(result.data);
-    setEmployees(result.data);
+    setEmployee(result.data);
+  };
+
+  const deleteEmployee = async (id) => {
+    await axios.delete(`${urlBase}/${id}`, employee);
+    addEmployees();
   };
 
   return (
@@ -34,7 +39,7 @@ export default function ListEmployees() {
             </tr>
           </thead>
           <tbody>
-            {employees.map(({ id, name, departament, salary }, index) => (
+            {employee.map(({ id, name, departament, salary }, index) => (
               <tr key={name} className={index % 2 === 0 ? "table-light" : ""}>
                 <td>{name}</td>
                 <td>{departament}</td>
@@ -50,11 +55,17 @@ export default function ListEmployees() {
                 </td>
                 <td>
                   <Link
-                    className="text-primary text-decoration-none"
+                    className="btn btn-warning btn-sm me-3"
                     to={`/editar/${id}`}
                   >
                     Editar
                   </Link>
+                  <button
+                    className="btn btn-danger btn-sm "
+                    onClick={()=> deleteEmployee(id)}
+                  >
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}
